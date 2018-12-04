@@ -10,6 +10,10 @@ Client.sendVelocity = function(data){
     Client.socket.emit('velocity', data);
 };
 
+Client.socket.on('ident',function(clientInfo){
+    Game.onIdent(clientInfo);
+});
+
 Client.socket.on('newclient',function(list){
     Game.onNewClient(list);
 });

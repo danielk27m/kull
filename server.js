@@ -49,10 +49,8 @@ function updateState() {
 
     forAllClients(function(socket) {
         var clientInfo = socket.myClientInfo;
-        clientInfo.x += clientInfo.dx * elapsed / 1000.0;
-        clientInfo.y += clientInfo.dy * elapsed / 1000.0;
-clientInfo.dx = Math.sin(thisUpdate / 1000.0) * 10.0;
-clientInfo.dy = Math.cos(thisUpdate / 1000.0) * 10.0;
+        clientInfo.x += clientInfo.dx * elapsed / 10.0;
+        clientInfo.y += clientInfo.dy * elapsed / 10.0;
     });
     var allClientInfo = getAllClients();
     forAllClients(function(socket) {
@@ -74,6 +72,7 @@ io.on('connection',function(socket){
             dy: 0,
             role: randomBool()? "hunter" : "prey",
         };
+        socket.emit('ident', socket.myClientInfo);
         socket.emit('newclient', getAllClients());
         socket.broadcast.emit('newclient', [socket.myClientInfo]);
 
