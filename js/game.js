@@ -33,12 +33,24 @@ Game.getCoordinates = function(layer, pointer){
 
 Game.onNewClient = function(list){
     list.forEach(function(clientInfo) {
-        Game.clientMap[clientInfo.id] = clientInfo;
+        Game.clientMap[clientInfo.id] = {
+            info: clientInfo,
+            sprite: game.add.sprite(clientInfo.x, clientInfo.y, 'hunter'),
+        };
     });
 };
 
-Game.onUpdate = Game.onNewClient;
+Game.onUpdate = function(list) {
+    list.forEach(function(clientInfo) {
+        var client = Game.clientMap[clientInfo.id];
+        client.info = clientInfo;
+        var tween = game.add.tween(client.sprite);
+        tween.to({ x: clientInfo.x, y: clientInfo.y }, 100);
+        tween.start();
+    });
+};
 
 Game.disconnect = function(id){
+    Game.clientMap[id].sprite.destroy();
     delete Game.clientMap[id];
 };

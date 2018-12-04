@@ -48,8 +48,11 @@ function updateState() {
     lastUpdate = thisUpdate;
 
     forAllClients(function(socket) {
-        socket.myClientInfo.x += socket.myClientInfo.dx * elapsed / 1000.0;
-        socket.myClientInfo.y += socket.myClientInfo.dy * elapsed / 1000.0;
+        var clientInfo = socket.myClientInfo;
+        clientInfo.x += clientInfo.dx * elapsed / 1000.0;
+        clientInfo.y += clientInfo.dy * elapsed / 1000.0;
+clientInfo.dx = Math.sin(thisUpdate / 1000.0) * 10.0;
+clientInfo.dy = Math.cos(thisUpdate / 1000.0) * 10.0;
     });
     var allClientInfo = getAllClients();
     forAllClients(function(socket) {
