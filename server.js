@@ -53,7 +53,7 @@ function updateState() {
     });
     var allClientInfo = getAllClients();
     forAllClients(function(socket) {
-        socket.emit('allclients', allClientInfo);
+        socket.emit('update', allClientInfo);
     });
 }
 
@@ -71,8 +71,8 @@ io.on('connection',function(socket){
             dy: 0,
             role: randomBool()? "hunter" : "prey",
         };
-        socket.emit('allclients', getAllClients());
-        socket.broadcast.emit('newclient',socket.myClientInfo);
+        socket.emit('newclient', getAllClients());
+        socket.broadcast.emit('newclient', [socket.myClientInfo]);
 
         socket.on('velocity', function(data){
             console.log('client ' + data.id + ' vel ' + data.dx +', ' + data.dy);
