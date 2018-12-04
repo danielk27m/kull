@@ -61,14 +61,15 @@ setInterval(updateState, 100);
 
 io.on('connection',function(socket){
 
-    socket.on('newclient',function(){
+    socket.on('newclient',function(data){
         socket.myClientInfo = {
             id: server.lastClientID++,
+            type: data.type,
             x: randomInt(100,400),
             y: randomInt(100,400),
             dx: 0,
             dy: 0,
-            isHunter: randomBool()
+            role: randomBool()? "hunter" : "prey",
         };
         socket.emit('allclients', getAllClients());
         socket.broadcast.emit('newclient',socket.myClientInfo);
@@ -77,7 +78,7 @@ io.on('connection',function(socket){
             console.log('client ' + data.id + ' vel ' + data.dx +', ' + data.dy);
             socket.myClientInfo.dx = data.dx;
             socket.myClientInfo.dy = data.dy;
-            io.emit('client', socket.myClientInfo);
+            io.emit('update', socket.myClientInfo);
         });
 
         socket.on('disconnect',function(){
