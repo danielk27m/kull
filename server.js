@@ -20,7 +20,7 @@ server.listen(process.env.PORT || 8081,function(){
 function forAllClients(f) {
     Object.keys(io.sockets.connected).forEach(function(socketID){
         var socket = io.sockets.connected[socketID];
-        f(socket);
+        if(socket.myClientInfo) f(socket);
     });
 }
 
