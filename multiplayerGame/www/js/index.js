@@ -20,11 +20,6 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-
-        document.querySelector(".app .start-button").addEventListener("onclick", function(evt) {
-          console.log("######## GOT HERE")
-        });
-        window.location.href = "http://10.10.30.203:8081";
     },
 
     // deviceready Event Handler
@@ -33,6 +28,13 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        console.log(document.querySelector(".app .start-button"))
+        // document.querySelector(".app .start-button").addEventListener("click", function () {
+        //   console.log("######## GOT HERE");
+        //   // window.location.href = "http://10.10.30.203:8081";
+        // });
+
+        window.location.href = "http://10.10.30.203:8081";
     },
 
     // Update DOM on a Received Event
