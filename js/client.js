@@ -2,12 +2,12 @@
 var Client = {};
 Client.socket = io.connect();
 
-Client.sendNewClient = function(){
-    Client.socket.emit('newclient');
+Client.sendNewClient = function(data){
+    Client.socket.emit('newclient', data);
 };
 
-Client.sendVelocity = function(dx, dy){
-    Client.socket.emit('velocity', { dx: dx, dy: dy });
+Client.sendVelocity = function(data){
+    Client.socket.emit('velocity', data);
 };
 
 Client.socket.on('newclient',function(list){
