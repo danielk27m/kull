@@ -69,8 +69,13 @@ Game.getCoordinates = function(layer, pointer){
     Client.sendClick(pointer.worldX, pointer.worldY);
 };
 */
-Game.onIdent = function(clientInfo){
+Game.onIdent = function(clientInfo) {
     Game.myId = clientInfo.id;
+    var client = {
+        info: clientInfo,
+    };
+    Game.clientMap[clientInfo.id] = client;
+    Game.infoText.text = "ID=" + clientInfo.id;
 };
 
 Game.onNewClient = function(list){
@@ -79,8 +84,9 @@ Game.onNewClient = function(list){
         var client = {
             info: clientInfo,
         };
+        var myClient = Game.clientMap[Game.myId];
         Game.clientMap[clientInfo.id] = client;
-        if (clientInfo.isPlayer) {
+        if (clientInfo.isPlayer && myClient.info.needsUpdates) {
             client.sprite = game.add.sprite(clientInfo.x, clientInfo.y, clientInfo.role);
             Game.sprites.add(client.sprite);
         }

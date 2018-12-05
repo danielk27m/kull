@@ -67,7 +67,7 @@ setInterval(updateState, 100);
 io.on('connection',function(socket){
 
     socket.on('newclient',function(data){
-        var role = randomBool()? "hunter" : "prey";
+        var role = data.isPlayer? randomBool()? "hunter" : "prey" : "";
         socket.myClientInfo = {
             id: server.lastClientID++,
             type: data.type,
@@ -84,9 +84,7 @@ io.on('connection',function(socket){
         //console.log("newclient from " + socket.myClientInfo.id);
         //console.log("ident and newclient to " + socket.myClientInfo.id);
         socket.emit('ident', socket.myClientInfo);
-        if(socket.myClientInfo.needsUpdates) {
-            socket.emit('newclient', getAllClients());
-        }
+        socket.emit('newclient', getAllClients());
         //console.log("newclient to all except " + socket.myClientInfo.id);
         forAllClients(function(socket2) {
             if (socket2 != socket && socket2.myClientInfo.needsUpdates) {
