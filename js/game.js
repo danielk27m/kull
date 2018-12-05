@@ -78,10 +78,12 @@ Game.onNewClient = function(list){
         var clientInfo = list[i];
         var client = {
             info: clientInfo,
-            sprite: game.add.sprite(clientInfo.x, clientInfo.y, clientInfo.role),
         };
         Game.clientMap[clientInfo.id] = client;
-        Game.sprites.add(client.sprite);
+        if (clientInfo.isPlayer) {
+            client.sprite = game.add.sprite(clientInfo.x, clientInfo.y, clientInfo.role);
+            Game.sprites.add(client.sprite);
+        }
     }
 };
 
@@ -89,6 +91,8 @@ Game.onUpdate = function(list) {
     for(var i = 0; i < list.length; i++) {
         var clientInfo = list[i];
         var client = Game.clientMap[clientInfo.id];
+        if (!client.sprite) continue;
+
         client.info = clientInfo;
         var tween = game.add.tween(client.sprite);
         tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
@@ -115,7 +119,8 @@ Game.onUpdate = function(list) {
     }
 };
 
-Game.onRemove = function(id){
-    Game.clientMap[id].sprite.destroy();
+Game.onRemove = function(id) {
+    var client = Game.clientMap[id];
+    if (client.sprite) client.sprite.destroy();
     delete Game.clientMap[id];
 };
