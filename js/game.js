@@ -135,11 +135,14 @@ Game.onUpdate = function(list) {
         }
 
         client.info = clientInfo;
+        var x = clientInfo.x - 32;
+        var y = clientInfo.y - 56;
+        var z = clientInfo.y;
         var tween = game.add.tween(client.body);
-        tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
+        tween.to({ x: x, y: y, z: y }, 100);
         tween.start();
         var tween2 = game.add.tween(client.hair);
-        tween2.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
+        tween2.to({ x: x, y: y, z: y }, 100);
         tween2.start();
 
         var dir;

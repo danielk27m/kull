@@ -55,6 +55,10 @@ function updateState() {
         if (clientInfo.moveEnableTime >= now) return;
         var newx = clientInfo.x + clientInfo.dx * elapsed * clientInfo.speed / 10.0;
         var newy = clientInfo.y + clientInfo.dy * elapsed * clientInfo.speed / 10.0;
+        if (newx < 16 || newx > 768 - 16 || newy < 16 || newy > 544 - 16) {
+            return;
+        }
+
         forAllClients(function(socket2) {
             if (socket2 == socket) return;
 
