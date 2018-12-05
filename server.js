@@ -1,3 +1,10 @@
+
+var gameMode = "kull";
+//var gameMode = "zombie";
+
+var hunterSpeed = 1.0;
+var preySpeed = 1.0;
+
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -51,6 +58,55 @@ function randomBool() {
     return randomInt(0, 2)? true : false;
 }
 
+function initPlayer(clientInfo) {
+    for(;;) {
+        clientInfo.x = randomInt(16, 768 - 32);
+        clientInfo.y = randomInt(16, 544 - 32);
+        if (!wouldCollideTerrain(clientInfo.x, clientInfo.y)) {
+            break;
+        }
+    }
+    clientInfo.dx = 0;
+    clientInfo.dy = 0;
+    if (clientInfo.isPlayer) {
+        clientInfo.role = roles[nextRole++];
+        if (nextRole >= roles.length) {
+            switch(gameMode) {
+            case "kull":
+                nextRole = 0;
+                break;
+            case "zombie":            
+                nextRole = 1;
+                break;
+            }
+        }
+    } else {
+        clientInfo.role = "";
+    }
+    clientInfo.speed = clientInfo.role == "hunter"? hunterSpeed : preySpeed;
+    clientInfo.moveEnableTime = Date.now();
+    clientInfo.catchEnableTime = Date.now();
+    clientInfo.score = 0;
+}
+
+function startGame(mode) {
+    gameMode = mode;
+    nextRole = 0;
+    forAllClients(function(socket) {
+        initPlayer(socket.myClientInfo);
+    });
+}
+
+function wouldCollideTerrain(x, y) {
+    var tileIndex = Math.floor(y / 32) * collisionLayer.width + Math.floor(x / 32);
+    if (tileIndex >= 0 && tileIndex < collisionLayer.data.length) {
+        if (collisionLayer.data[tileIndex]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 var lastUpdate = Date.now();
 function updateState() {
     var thisUpdate = Date.now();
@@ -69,9 +125,8 @@ function updateState() {
             return;
         }
 
-        var tileIndex = Math.floor(newy / 32) * collisionLayer.width + Math.floor(newx / 32);
-        if (tileIndex >= 0 && tileIndex < collisionLayer.data.length) {
-            if (collisionLayer.data[tileIndex]) return;
+        if(wouldCollideTerrain(newx, newy)) {
+            return;
         }
 
         forAllClients(function(socket2) {
@@ -90,12 +145,20 @@ function updateState() {
                 if (clientInfo.catchEnableTime < now && clientInfo2.catchEnableTime < now) {
                     if (clientInfo.role === "hunter") {
                         if (clientInfo2.role === "prey") {
-                            clientInfo2.moveEnableTime = now + 2000;
-                            clientInfo.catchEnableTime = now + 2000;
-                            clientInfo.role = "prey";
-                            clientInfo.speed = 1.0;
-                            clientInfo2.role = "hunter";
-                            clientInfo2.speed = 0.8;
+                            switch (gameMode) {
+                            case 'kull':
+                                clientInfo2.moveEnableTime = now + 2000;
+                                clientInfo.catchEnableTime = now + 2000;
+                                clientInfo.role = "prey";
+                                clientInfo.speed = preySpeed;
+                                clientInfo2.role = "hunter";
+                                clientInfo2.speed = hunterSpeed;
+                                break;
+                            case 'zombie':
+                                clientInfo2.role = "hunter";
+                                clientInfo2.speed = hunterSpeed;
+                                break;
+                            }
                         }
                     }
                 }
@@ -107,14 +170,26 @@ function updateState() {
             clientInfo.score++;
         }
     });
+    var doRestart = false;
+    var hunterCount = 0;
+    var preyCount = 0;
     var allClientInfo = getAllClients();
     //console.log("update to all");
     forAllClients(function(socket) {
         if(socket.myClientInfo.needsUpdates) {
             socket.emit('update', allClientInfo);
         }
+        if (socket.myClientInfo.isPlayer) {
+            if (socket.myClientInfo.score >= 1000) doRestart = true;
+            if (socket.myClientInfo.role === "hunter") hunterCount++;
+            else preyCount++;
+        }
     });
     //io.emit('update', allClientInfo);
+
+    if (doRestart || (!hunterCount || !preyCount) && (hunterCount + preyCount > 1)) {
+        startGame(["kull", "zombie"][Math.floor(Math.random() * 2)]);
+    }
 }
 
 setInterval(updateState, 100);
@@ -125,15 +200,6 @@ var nextRole = 0;
 io.on('connection',function(socket){
 
     socket.on('newclient',function(data){
-        var role;
-        if (data.isPlayer) {
-            role = roles[nextRole++];
-            if (nextRole >= roles.length) {
-                nextRole = 0;
-            }
-        } else {
-            role = "";
-        }
         var id;
         if (!data.isPlayer) {
             id = -1;
@@ -146,19 +212,11 @@ io.on('connection',function(socket){
         socket.myClientInfo = {
             id: id,
             type: data.type,
-            x: randomInt(100,400),
-            y: randomInt(100,400),
-            dx: 0,
-            dy: 0,
-            role: role,
-            speed: role == "hunter"? 0.8 : 1,
             isPlayer: data.isPlayer || false,
             needsUpdates: data.needsUpdates || false,
             playsSound: data.playsSound || false,
-            moveEnableTime: Date.now(),
-            catchEnableTime: Date.now(),
-            score: 0,
         };
+        initPlayer(socket.myClientInfo);
         console.log("new client: " + JSON.stringify(socket.myClientInfo));
         //console.log("newclient from " + socket.myClientInfo.id);
         //console.log("ident and newclient to " + socket.myClientInfo.id);
