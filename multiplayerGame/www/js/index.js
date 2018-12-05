@@ -33,7 +33,7 @@ var app = {
         //   // window.location.href = "http://10.10.30.203:8081";
         // });
 
-        window.location.href = "http://10.10.31.60:8081";
+        window.location.href = "http://10.10.31.60:8081?type=spectator";
     },
 };
 
