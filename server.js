@@ -53,9 +53,11 @@ function updateState() {
         clientInfo.y += clientInfo.dy * elapsed / 10.0;
     });
     var allClientInfo = getAllClients();
+    console.log("update to all");
     forAllClients(function(socket) {
         socket.emit('update', allClientInfo);
     });
+    //io.emit('update', allClientInfo);
 }
 
 setInterval(updateState, 100);
@@ -72,18 +74,25 @@ io.on('connection',function(socket){
             dy: 0,
             role: randomBool()? "hunter" : "prey",
         };
+        console.log("newclient from " + socket.myClientInfo.id);
+        console.log("ident and newclient to " + socket.myClientInfo.id);
         socket.emit('ident', socket.myClientInfo);
         socket.emit('newclient', getAllClients());
+        console.log("newclient to all except " + socket.myClientInfo.id);
         socket.broadcast.emit('newclient', [socket.myClientInfo]);
 
         socket.on('velocity', function(data){
-            console.log('client ' + data.id + ' vel ' + data.dx +', ' + data.dy);
+            console.log("velocity from " + socket.myClientInfo.id);
+//            console.log('client ' + data.id + ' vel ' + data.dx +', ' + data.dy);
             socket.myClientInfo.dx = data.dx;
             socket.myClientInfo.dy = data.dy;
+            console.log("update to all");
             io.emit('update', socket.myClientInfo);
         });
 
         socket.on('disconnect',function(){
+            console.log("disconnect from " + socket.myClientInfo.id);
+            console.log("disconnect to all");
             io.emit('disconnect', socket.myClientInfo.id);
         });
     });

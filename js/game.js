@@ -29,10 +29,13 @@ Game.create = function(){
     layer.events.onInputUp.add(Game.getCoordinates, this);
     Client.sendNewClient({ type: "full" });
 
+    Game.sprites = game.add.group();
     Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
 };
 
 Game.update = function() {
+    Game.sprites.sort("z", Phaser.Group.SORT_ASCENDING);
+
     if (Game.myId === undefined) {
         return;
     }
@@ -66,20 +69,24 @@ Game.onIdent = function(clientInfo){
 };
 
 Game.onNewClient = function(list){
-    list.forEach(function(clientInfo) {
-        Game.clientMap[clientInfo.id] = {
+    for(var i = 0; i < list.length; i++) {
+        var clientInfo = list[i];
+        var client = {
             info: clientInfo,
             sprite: game.add.sprite(clientInfo.x, clientInfo.y, 'hunter'),
         };
-    });
+        Game.clientMap[clientInfo.id] = client;
+        Game.sprites.add(client.sprite);
+    }
 };
 
 Game.onUpdate = function(list) {
-    list.forEach(function(clientInfo) {
+    for(var i = 0; i < list.length; i++) {
+        var clientInfo = list[i];
         var client = Game.clientMap[clientInfo.id];
         client.info = clientInfo;
         var tween = game.add.tween(client.sprite);
-        tween.to({ x: clientInfo.x, y: clientInfo.y }, 1000);
+        tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 1000);
         tween.start();
 
         var dir;
@@ -97,10 +104,11 @@ Game.onUpdate = function(list) {
             }
         }
         client.sprite.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;
-    });
+    }
 };
 
-Game.disconnect = function(id){
+Game.onDisconnect = function(id){
+    Game.infoText.setText(Game.infoText.getText() + "disconnect " + id + "\n");
     Game.clientMap[id].sprite.destroy();
     delete Game.clientMap[id];
 };
