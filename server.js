@@ -55,7 +55,9 @@ function updateState() {
     var allClientInfo = getAllClients();
     //console.log("update to all");
     forAllClients(function(socket) {
-        socket.emit('update', allClientInfo);
+        if(socket.myClientInfo.needsUpdates) {
+            socket.emit('update', allClientInfo);
+        }
     });
     //io.emit('update', allClientInfo);
 }
@@ -82,9 +84,15 @@ io.on('connection',function(socket){
         //console.log("newclient from " + socket.myClientInfo.id);
         //console.log("ident and newclient to " + socket.myClientInfo.id);
         socket.emit('ident', socket.myClientInfo);
-        socket.emit('newclient', getAllClients());
+        if(socket.myClientInfo.needsUpdates) {
+            socket.emit('newclient', getAllClients());
+        }
         //console.log("newclient to all except " + socket.myClientInfo.id);
-        socket.broadcast.emit('newclient', [socket.myClientInfo]);
+        forAllClients(function(socket2) {
+            if (socket2 != socket && socket2.myClientInfo.needsUpdates) {
+                socket2.emit('newclient', [socket.myClientInfo]);
+            }
+        });
 
         socket.on('velocity', function(data){
             //console.log("velocity from " + socket.myClientInfo.id);
