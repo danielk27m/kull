@@ -27,27 +27,14 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
         console.log(document.querySelector(".app .start-button"))
         // document.querySelector(".app .start-button").addEventListener("click", function () {
         //   console.log("######## GOT HERE");
         //   // window.location.href = "http://10.10.30.203:8081";
         // });
 
-        window.location.href = "http://10.10.30.203:8081";
+        window.location.href = "http://10.10.31.60:8081";
     },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
 };
 
 app.initialize();
