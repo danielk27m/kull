@@ -38,7 +38,7 @@ function randomInt(low, high) {
 }
 
 function randomBool() {
-    return randomInt(0, 1)? true : false;
+    return randomInt(0, 2)? true : false;
 }
 
 var lastUpdate = Date.now();
@@ -49,8 +49,8 @@ function updateState() {
 
     forAllClients(function(socket) {
         var clientInfo = socket.myClientInfo;
-        clientInfo.x += clientInfo.dx * elapsed / 10.0;
-        clientInfo.y += clientInfo.dy * elapsed / 10.0;
+        clientInfo.x += clientInfo.dx * elapsed * clientInfo.speed / 10.0;
+        clientInfo.y += clientInfo.dy * elapsed * clientInfo.speed / 10.0;
     });
     var allClientInfo = getAllClients();
     console.log("update to all");
@@ -65,6 +65,7 @@ setInterval(updateState, 100);
 io.on('connection',function(socket){
 
     socket.on('newclient',function(data){
+        var role = randomBool()? "hunter" : "prey";
         socket.myClientInfo = {
             id: server.lastClientID++,
             type: data.type,
@@ -72,7 +73,10 @@ io.on('connection',function(socket){
             y: randomInt(100,400),
             dx: 0,
             dy: 0,
-            role: randomBool()? "hunter" : "prey",
+            role: role,
+            speed: role == "hunter"? 0.8 : 1,
+            isPlayer: data.isPlayer || false,
+            needsUpdates: data.needsUpdates || false,
         };
         console.log("newclient from " + socket.myClientInfo.id);
         console.log("ident and newclient to " + socket.myClientInfo.id);
@@ -93,8 +97,8 @@ io.on('connection',function(socket){
         socket.on('disconnect',function(){
             console.log("disconnect from " + socket.myClientInfo.id);
             console.log("remove to all");
-            forAllClients(function(socket) {
-                socket.emit('remove', socket.myClientInfo.id);
+            forAllClients(function(socket2) {
+                socket2.emit('remove', socket.myClientInfo.id);
             });
             //io.emit('remove', socket.myClientInfo.id);
         });

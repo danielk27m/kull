@@ -27,7 +27,12 @@ Game.create = function(){
     }
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
 //    layer.events.onInputUp.add(Game.getCoordinates, this);
-    Client.sendNewClient({ type: "full" });
+    var type = game.net.getQueryString()["type"] || "player";
+    Client.sendNewClient({
+        type: type,
+        isPlayer: type == "player" || type == "pcplayer",
+        needsUpdates: type == "spectator" || type == "pcplayer",
+    });
 
     Game.sprites = game.add.group();
     Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
@@ -73,7 +78,7 @@ Game.onNewClient = function(list){
         var clientInfo = list[i];
         var client = {
             info: clientInfo,
-            sprite: game.add.sprite(clientInfo.x, clientInfo.y, 'hunter'),
+            sprite: game.add.sprite(clientInfo.x, clientInfo.y, clientInfo.role),
         };
         Game.clientMap[clientInfo.id] = client;
         Game.sprites.add(client.sprite);
