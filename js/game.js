@@ -57,7 +57,11 @@ Game.create = function(){
 function playSound(name, looped) {
     if (Game.myId) {
         if (Game.clientMap[Game.myId].info.playsSound) {
-            Game[name].play();
+            if (looped) {
+                Game[name].loopFull();
+            } else {
+                Game[name].play();
+            }
         }
     }
 }
