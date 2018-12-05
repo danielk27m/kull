@@ -1,4 +1,15 @@
-#game canvas {
+html {
   background-color:black;
-  margin:auto;
+}
+
+#game {
+}
+
+#game canvas {
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
 }
