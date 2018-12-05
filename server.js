@@ -87,13 +87,16 @@ io.on('connection',function(socket){
             socket.myClientInfo.dx = data.dx;
             socket.myClientInfo.dy = data.dy;
             console.log("update to all");
-            io.emit('update', socket.myClientInfo);
+            //io.emit('update', socket.myClientInfo);
         });
 
         socket.on('disconnect',function(){
             console.log("disconnect from " + socket.myClientInfo.id);
-            console.log("disconnect to all");
-            io.emit('disconnect', socket.myClientInfo.id);
+            console.log("remove to all");
+            forAllClients(function(socket) {
+                socket.emit('remove', socket.myClientInfo.id);
+            });
+            //io.emit('remove', socket.myClientInfo.id);
         });
     });
 });

@@ -2,6 +2,8 @@
 var Game = {};
 
 Game.init = function(){
+    Game.clientMap = {};
+
     game.stage.disableVisibilityChange = true;
 };
 
@@ -14,8 +16,6 @@ Game.preload = function() {
 };
 
 Game.create = function(){
-    Game.clientMap = {};
-
 //    var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 //    testKey.onDown.add(Client.sendTest, this);
 
@@ -26,7 +26,7 @@ Game.create = function(){
         layer = map.createLayer(i);
     }
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
-    layer.events.onInputUp.add(Game.getCoordinates, this);
+//    layer.events.onInputUp.add(Game.getCoordinates, this);
     Client.sendNewClient({ type: "full" });
 
     Game.sprites = game.add.group();
@@ -59,11 +59,11 @@ Game.update = function() {
         Game.moving = false;
     }
 };
-
+/*
 Game.getCoordinates = function(layer, pointer){
     Client.sendClick(pointer.worldX, pointer.worldY);
 };
-
+*/
 Game.onIdent = function(clientInfo){
     Game.myId = clientInfo.id;
 };
@@ -86,7 +86,7 @@ Game.onUpdate = function(list) {
         var client = Game.clientMap[clientInfo.id];
         client.info = clientInfo;
         var tween = game.add.tween(client.sprite);
-        tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 1000);
+        tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
         tween.start();
 
         var dir;
@@ -99,16 +99,18 @@ Game.onUpdate = function(list) {
         } else {
             if (clientInfo.dy > 0) {
                 dir = 2;
-            } else {
+            } else if(clientInfo.dy < 0) {
                 dir = 0;
+            } else {
+                client.sprite.frame = 10 * 13;
+                continue;
             }
         }
         client.sprite.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;
     }
 };
 
-Game.onDisconnect = function(id){
-    Game.infoText.setText(Game.infoText.getText() + "disconnect " + id + "\n");
+Game.onRemove = function(id){
     Game.clientMap[id].sprite.destroy();
     delete Game.clientMap[id];
 };

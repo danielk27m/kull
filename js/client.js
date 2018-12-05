@@ -22,6 +22,6 @@ Client.socket.on('update',function(list){
     Game.onUpdate(list);
 });
 
-Client.socket.on('disconnect',function(id){
-    Game.onDisconnect(id);
+Client.socket.on('remove',function(id){
+    Game.onRemove(id);
 });
