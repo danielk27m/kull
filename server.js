@@ -12,6 +12,7 @@ app.get('/',function(req,res){
 });
 
 server.lastClientID = 0;
+server.unusedIDs = [];
 
 server.listen(process.env.PORT || 8081,function(){
     console.log('Listening on '+server.address().port);
@@ -88,6 +89,9 @@ function updateState() {
         });
         clientInfo.x = newx;
         clientInfo.y = newy;
+        if (clientInfo.role === "prey") {
+            clientInfo.score++;
+        }
     });
     var allClientInfo = getAllClients();
     //console.log("update to all");
@@ -116,8 +120,17 @@ io.on('connection',function(socket){
         } else {
             role = "";
         }
+        var id;
+        if (!data.isPlayer) {
+            id = -1;
+        } else if (server.unusedIDs.length) {
+            id = server.unusedIDs.pop();
+        } else {
+            id = server.lastClientID++;
+        }
+
         socket.myClientInfo = {
-            id: server.lastClientID++,
+            id: id,
             type: data.type,
             x: randomInt(100,400),
             y: randomInt(100,400),
@@ -130,6 +143,7 @@ io.on('connection',function(socket){
             playsSound: data.playsSound || false,
             moveEnableTime: Date.now(),
             catchEnableTime: Date.now(),
+            score: 0,
         };
         console.log("new client: " + JSON.stringify(socket.myClientInfo));
         //console.log("newclient from " + socket.myClientInfo.id);
@@ -159,6 +173,7 @@ io.on('connection',function(socket){
                 socket2.emit('remove', socket.myClientInfo.id);
             });
             //io.emit('remove', socket.myClientInfo.id);
+            server.unusedIDs.push(socket.myClientInfo.id);
         });
     });
 });

@@ -47,7 +47,6 @@ Game.create = function(){
     }
 
     Game.sprites = game.add.group();
-    Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
 
     Game.music = game.add.audio('music');
     Game.avoid1 = game.add.audio('avoid1');
@@ -78,6 +77,14 @@ function playSound(name, looped) {
     }
 }
 
+function playerColor(id) {
+    var colorAngle = id * 2.5;
+    var red = Math.floor(Math.sin(colorAngle - 2) * 127.5 + 127.5);
+    var green = Math.floor(Math.sin(colorAngle) * 127.5 + 127.5);
+    var blue = Math.floor(Math.sin(colorAngle + 2) * 127.5 + 127.5);
+    return (red << 16) + (green << 8) + (blue);
+}
+
 function removeSprite(client) {
     if (client.hair) client.hair.destroy();
     if (client.body) client.body.destroy();
@@ -90,11 +97,7 @@ function addSprite(client, role) {
     client.hair.pivot.setTo(32, 56);
     Game.sprites.add(client.body);
     Game.sprites.add(client.hair);
-    var colorAngle = client.info.id * 2.5;
-    var red = Math.sin(colorAngle - 2) * 127.5 + 127.5;
-    var green = Math.sin(colorAngle) * 127.5 + 127.5;
-    var blue = Math.sin(colorAngle + 2) * 127.5 + 127.5;
-    client.hair.tint = (red << 16) + (green << 8) + (blue);
+    client.hair.tint = playerColor(client.info.id);
 }
 
 Game.update = function() {
@@ -157,7 +160,6 @@ Game.onIdent = function(clientInfo) {
         info: clientInfo,
     };
     Game.clientMap[clientInfo.id] = client;
-    Game.infoText.text = "ID=" + clientInfo.id;
 
     playSound("music", true);
 };
@@ -172,6 +174,11 @@ Game.onNewClient = function(list){
         Game.clientMap[clientInfo.id] = client;
         if (clientInfo.isPlayer && myClient.info.needsUpdates) {
             addSprite(client, client.info.role);
+            color = playerColor(clientInfo.id);
+            color = "000000" + Number(color).toString(16);
+            color = color.substr(color.length - 6);
+            client.scoreText = game.add.text(660, client.info.id * 24 + 8, "0", { fill: "#" + color, strokeThickness: 2, stroke: "black", boundsAlignH: "right" });
+            client.scoreText.setTextBounds(0, 0, 100, 0);
         }
     }
 };
@@ -201,6 +208,8 @@ Game.onUpdate = function(list) {
         tween2.to({ x: x, y: y, z: z + 0.5 }, 100);
         tween2.start();
 
+        client.scoreText.setText(clientInfo.score);
+
         var dir;
         if (Math.abs(clientInfo.dx) > Math.abs(clientInfo.dy)) {
             if (clientInfo.dx > 0) {
@@ -218,11 +227,13 @@ Game.onUpdate = function(list) {
                 continue;
             }
         }
-        client.hair.frame = client.body.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;    }
+        client.hair.frame = client.body.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;
+    }
 };
 
 Game.onRemove = function(id) {
     var client = Game.clientMap[id];
     removeSprite(client);
+    client.scoreText.destroy();
     delete Game.clientMap[id];
 };
