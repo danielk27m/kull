@@ -20,20 +20,32 @@ Game.preload = function() {
     game.load.audio('idle2', 'assets/sounds/idle2.wav');
     game.load.audio('idle3', 'assets/sounds/idle3.wav');
     game.load.audio('idle4', 'assets/sounds/idle4.wav');
+    game.load.image('control', 'assets/sprites/compass.png');
 };
 
 Game.create = function(){
     Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 
-    var map = game.add.tilemap('map');
-    map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
-    var layer;
-    for(var i = 0; i < map.layers.length; i++) {
-        layer = map.createLayer(i);
+    Game.type = game.net.getQueryString()["type"] || "player";
+
+    if (Game.type == "player") {
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+        Game.controlSprite = game.add.sprite(game.scale.width / 2, game.scale.height / 2, "control")
+        Game.controlSprite.pivot.setTo(Game.controlSprite.width / 2, Game.controlSprite.height - Game.controlSprite.width / 2)
+    } else {
+        var map = game.add.tilemap('map');
+        map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
+        var layer;
+        for (var i = 0; i < map.layers.length; i++) {
+            layer = map.createLayer(i);
+        }
+        layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
+        //    layer.events.onInputUp.add(Game.getCoordinates, this);
     }
-    layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
-//    layer.events.onInputUp.add(Game.getCoordinates, this);
-    var type = game.net.getQueryString()["type"] || "player";
+
     Game.sprites = game.add.group();
     Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
 
@@ -47,10 +59,10 @@ Game.create = function(){
     Game.nextIdle = Date.now();
 
     Client.sendNewClient({
-        type: type,
-        isPlayer: type == "player" || type == "pcplayer",
-        needsUpdates: type == "spectator" || type == "pcplayer",
-        playsSound: type == "spectator",
+        type: Game.type,
+        isPlayer: Game.type == "player" || Game.type == "pcplayer",
+        needsUpdates: Game.type == "spectator" || Game.type == "pcplayer",
+        playsSound: Game.type == "spectator",
     });
 };
 
@@ -129,6 +141,10 @@ Game.update = function() {
         data.dy /= d;
     }
     Client.sendVelocity(data);
+
+    if (Game.type == "player") {
+        Game.controlSprite.rotation = Game.moving ? game.physics.arcade.angleToPointer(Game.controlSprite) + Math.PI / 2 : 0;
+    }
 };
 /*
 Game.getCoordinates = function(layer, pointer){

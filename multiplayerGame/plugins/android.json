@@ -12,6 +12,16 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-disable-http-cache": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "nodejs-mobile-cordova": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {}

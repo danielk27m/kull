@@ -1,0 +1,72 @@
+{
+  "_from": "nodejs-mobile-cordova",
+  "_id": "nodejs-mobile-cordova@0.2.2",
+  "_inBundle": false,
+  "_integrity": "sha512-feIDN0S3BPbH2MDigInjKpfAlCX9+tkWOIZpxP31B9VnggACRobcYQO5+oBzpavJN4s4n/Qqr9gf145EbubkMg==",
+  "_location": "/nodejs-mobile-cordova",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "nodejs-mobile-cordova",
+    "name": "nodejs-mobile-cordova",
+    "escapedName": "nodejs-mobile-cordova",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/nodejs-mobile-cordova/-/nodejs-mobile-cordova-0.2.2.tgz",
+  "_shasum": "81411f4cb4dfb8905e54773395fe00f976700ac9",
+  "_spec": "nodejs-mobile-cordova",
+  "_where": "/Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame",
+  "author": {
+    "name": "janeasystems"
+  },
+  "bugs": {
+    "url": "https://github.com/janeasystems/nodejs-mobile/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "nodejs-mobile-cordova",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {
+    "nodejs-mobile-gyp": "^0.2.0",
+    "tar.gz2": "^1.0.0"
+  },
+  "deprecated": false,
+  "description": "Node.js for Mobile Apps Cordova plugin",
+  "engines": {
+    "cordovaDependencies": {
+      ">=0.1.0": {
+        "cordova-android": ">=6.2.1",
+        "cordova-ios": ">=4.4.0"
+      }
+    }
+  },
+  "homepage": "https://code.janeasystems.com/nodejs-mobile",
+  "keywords": [
+    "cordova",
+    "mobile",
+    "nodejs",
+    "node.js",
+    "nodejs-mobile",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "nodejs-mobile-cordova",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janeasystems/nodejs-mobile-cordova.git"
+  },
+  "version": "0.2.2"
+}

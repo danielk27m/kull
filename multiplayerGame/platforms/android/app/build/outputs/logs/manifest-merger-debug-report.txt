@@ -1,13 +1,24 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+MERGED from [:barcodescanner-release-2.1.5:] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/barcodescanner-release-2.1.5.aar/0569d2772ff38ae9036041cff51914bb/AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.support:support-v4:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/002fa4564ff1834a494f351afd5b6836/AndroidManifest.xml:17:1-22:12
 MERGED from [:CordovaLib] /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/CordovaLib/build/intermediates/manifests/full/debug/AndroidManifest.xml:20:1-27:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-16:12
+MERGED from [com.android.support:support-media-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/d25453aa4c37b7f943ac05db2ce345c6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/2c08f470bb7bf1800308d10a2161bfec/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/51983dae0fbeda77953b4a404783c8f0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/bf6694032dbcd0e498c92267915972d6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/64194b847a71eb70a0b2e12a8ae40764/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/9988b35bc9723be4fd9ccaa65d6c3360/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/10b982425db3077213501ede558ad9ed/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/606dfa6193cacbfa2716b32ad22ab910/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/2fb6b730aa7ca654e9f4429444b633c7/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:1-21:12
 	package
 		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:2:102-135
 		INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml
@@ -43,7 +54,9 @@ ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platf
 	android:name
 		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:4:22-64
 application
-ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:5:5-12:19
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:5:5-14:19
+MERGED from [:barcodescanner-release-2.1.5:] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/barcodescanner-release-2.1.5.aar/0569d2772ff38ae9036041cff51914bb/AndroidManifest.xml:11:5-12:19
+MERGED from [:barcodescanner-release-2.1.5:] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/barcodescanner-release-2.1.5.aar/0569d2772ff38ae9036041cff51914bb/AndroidManifest.xml:11:5-12:19
 	android:supportsRtl
 		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:5:114-140
 	android:label
@@ -78,23 +91,79 @@ category#android.intent.category.LAUNCHER
 ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:9:17-77
 	android:name
 		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:9:27-74
+activity#com.google.zxing.client.android.CaptureActivity
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:9-311
+	android:clearTaskOnLaunch
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:19-51
+	android:windowSoftInputMode
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:261-308
+	android:exported
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:114-138
+	android:configChanges
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:52-113
+	android:theme
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:202-260
+	android:name
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:12:139-201
+activity#com.google.zxing.client.android.encode.EncodeActivity
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:9-112
+	android:label
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:19-40
+	android:name
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:41-109
 uses-sdk
-ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:5-74
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:5-74
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:5-74
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:5-74
+MERGED from [:barcodescanner-release-2.1.5:] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/barcodescanner-release-2.1.5.aar/0569d2772ff38ae9036041cff51914bb/AndroidManifest.xml:7:5-9:41
+MERGED from [:barcodescanner-release-2.1.5:] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/barcodescanner-release-2.1.5.aar/0569d2772ff38ae9036041cff51914bb/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:support-v4:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/002fa4564ff1834a494f351afd5b6836/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/002fa4564ff1834a494f351afd5b6836/AndroidManifest.xml:20:5-44
 MERGED from [:CordovaLib] /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/CordovaLib/build/intermediates/manifests/full/debug/AndroidManifest.xml:25:5-44
 MERGED from [:CordovaLib] /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/CordovaLib/build/intermediates/manifests/full/debug/AndroidManifest.xml:25:5-44
-INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:5-74
+MERGED from [com.android.support:support-media-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/d25453aa4c37b7f943ac05db2ce345c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/d25453aa4c37b7f943ac05db2ce345c6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/2c08f470bb7bf1800308d10a2161bfec/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/2c08f470bb7bf1800308d10a2161bfec/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/51983dae0fbeda77953b4a404783c8f0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/51983dae0fbeda77953b4a404783c8f0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/bf6694032dbcd0e498c92267915972d6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/bf6694032dbcd0e498c92267915972d6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/64194b847a71eb70a0b2e12a8ae40764/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/64194b847a71eb70a0b2e12a8ae40764/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/9988b35bc9723be4fd9ccaa65d6c3360/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/9988b35bc9723be4fd9ccaa65d6c3360/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/10b982425db3077213501ede558ad9ed/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/10b982425db3077213501ede558ad9ed/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/606dfa6193cacbfa2716b32ad22ab910/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/606dfa6193cacbfa2716b32ad22ab910/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/2fb6b730aa7ca654e9f4429444b633c7/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/danielkarlsson/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/2fb6b730aa7ca654e9f4429444b633c7/AndroidManifest.xml:20:5-44
+INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:5-74
 	android:targetSdkVersion
-		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:42-71
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:42-71
 	android:minSdkVersion
-		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:13:15-41
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:15-41
 		INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:14:5-79
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:16:5-79
 	android:name
-		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:14:22-76
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:16:22-76
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:5-76
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:17:5-76
 	android:name
-		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:15:22-73
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:17:22-73
+uses-permission#android.permission.CAMERA
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:18:5-65
+	android:name
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:18:22-62
+uses-permission#android.permission.FLASHLIGHT
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:19:5-69
+	android:name
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:19:22-66
+uses-feature#android.hardware.camera
+ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:20:5-84
+	android:required
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:20:58-81
+	android:name
+		ADDED from /Users/danielkarlsson/Documents/src/mp_game_poc/multiplayerGame/platforms/android/app/src/main/AndroidManifest.xml:20:19-57

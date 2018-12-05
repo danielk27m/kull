@@ -33,6 +33,17 @@ var app = {
         //   // window.location.href = "http://10.10.30.203:8081";
         // });
 
+        // console.log(cordova)
+        // console.log(cordova.plugins)
+        // console.log(cordova.plugins.barcodeScanner)
+        // if (cordova.plugins.barcodeScanner) {
+        //   cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, "http://google.se", function (success) {
+        //     console.log("encode success: " + success);
+        //   }, function (fail) {
+        //     console.error("encoding failed: " + fail);
+        //   });
+        // }
+
         window.location.href = "http://10.10.31.60:8081?type=spectator";
     },
 };
