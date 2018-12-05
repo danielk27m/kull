@@ -2,6 +2,15 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
+var fs = require('fs');
+
+var tilemap = JSON.parse(fs.readFileSync('assets/map/map1.json'));
+var collisionLayer;
+for(var i = 0; i < tilemap.layers.length; i++) {
+    if (tilemap.layers[i].name === "collision") {
+        collisionLayer = tilemap.layers[i];
+    }
+}
 
 app.use('/css',express.static(__dirname + '/css'));
 app.use('/js',express.static(__dirname + '/js'));
@@ -58,6 +67,11 @@ function updateState() {
         var newy = clientInfo.y + clientInfo.dy * elapsed * clientInfo.speed / 10.0;
         if (newx < 16 || newx > 768 - 16 || newy < 16 || newy > 544 - 16) {
             return;
+        }
+
+        var tileIndex = Math.floor(newy / 32) * collisionLayer.width + Math.floor(newx / 32);
+        if (tileIndex >= 0 && tileIndex < collisionLayer.data.length) {
+            if (collisionLayer.data[tileIndex]) return;
         }
 
         forAllClients(function(socket2) {
