@@ -28,14 +28,14 @@ Game.create = function(){
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
 //    layer.events.onInputUp.add(Game.getCoordinates, this);
     var type = game.net.getQueryString()["type"] || "player";
+    Game.sprites = game.add.group();
+    Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
+
     Client.sendNewClient({
         type: type,
         isPlayer: type == "player" || type == "pcplayer",
         needsUpdates: type == "spectator" || type == "pcplayer",
     });
-
-    Game.sprites = game.add.group();
-    Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
 };
 
 Game.update = function() {
@@ -45,13 +45,13 @@ Game.update = function() {
         return;
     }
 
-    if (game.input.mousePointer.isDown) {
+    if (game.input.activePointer.isDown) {
         Game.moving = true;
         var data = {};
         var dx = game.input.x - (game.scale.width / 2);
         var dy = game.input.y - (game.scale.height / 2);
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if(dist < 64) {
+        if(dist < 4) {
             data.dx = 0;
             data.dy = 0;
         } else {
