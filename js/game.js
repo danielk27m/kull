@@ -16,9 +16,6 @@ Game.preload = function() {
 };
 
 Game.create = function(){
-//    var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-//    testKey.onDown.add(Client.sendTest, this);
-
     Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 
     var map = game.add.tilemap('map');
@@ -64,24 +61,37 @@ Game.update = function() {
         return;
     }
 
+    var data = { dx: 0, dy: 0};
+
+    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+        data.dx--;
+    }
+    if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+        data.dx++;
+    }
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+        data.dy--;
+    }
+    if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+        data.dy++;
+    }
+
     if (game.input.activePointer.isDown) {
         Game.moving = true;
-        var data = {};
         var dx = game.input.x - (game.scale.width / 2);
         var dy = game.input.y - (game.scale.height / 2);
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if(dist < 4) {
-            data.dx = 0;
-            data.dy = 0;
-        } else {
-            data.dx = dx / dist;
-            data.dy = dy / dist;
+        if(dist >= 4) {
+            data.dx += dx / dist;
+            data.dy += dy / dist;
         }
-        Client.sendVelocity(data);
-    } else if (Game.moving) {
-        Client.sendVelocity({ dx: 0, dy: 0 });
-        Game.moving = false;
     }
+    var d = Math.sqrt(data.dx * data.dx + data.dy * data.dy);
+    if(d) {
+        data.dx /= d;
+        data.dy /= d;
+    }
+    Client.sendVelocity(data);
 };
 /*
 Game.getCoordinates = function(layer, pointer){
