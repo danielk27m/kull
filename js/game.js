@@ -19,6 +19,8 @@ Game.create = function(){
 //    var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 //    testKey.onDown.add(Client.sendTest, this);
 
+    Phaser.Canvas.setImageRenderingCrisp(game.canvas);
+
     var map = game.add.tilemap('map');
     map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
     var layer;
@@ -37,6 +39,15 @@ Game.create = function(){
         needsUpdates: type == "spectator" || type == "pcplayer",
     });
 };
+
+function removeSprite(client) {
+    if (client.sprite) client.sprite.destroy();
+}
+
+function addSprite(client, role) {
+    client.sprite = game.add.sprite(client.info.x, client.info.y, role);
+    Game.sprites.add(client.sprite);
+}
 
 Game.update = function() {
     Game.sprites.sort("z", Phaser.Group.SORT_ASCENDING);
@@ -87,8 +98,7 @@ Game.onNewClient = function(list){
         var myClient = Game.clientMap[Game.myId];
         Game.clientMap[clientInfo.id] = client;
         if (clientInfo.isPlayer && myClient.info.needsUpdates) {
-            client.sprite = game.add.sprite(clientInfo.x, clientInfo.y, clientInfo.role);
-            Game.sprites.add(client.sprite);
+            addSprite(client, client.info.role);
         }
     }
 };
@@ -98,6 +108,13 @@ Game.onUpdate = function(list) {
         var clientInfo = list[i];
         var client = Game.clientMap[clientInfo.id];
         if (!client.sprite) continue;
+
+        if (client.info) {
+            if (client.info.role != clientInfo.role) {
+                removeSprite(client);
+                addSprite(client, clientInfo.role);
+            }
+        }
 
         client.info = clientInfo;
         var tween = game.add.tween(client.sprite);
@@ -127,6 +144,6 @@ Game.onUpdate = function(list) {
 
 Game.onRemove = function(id) {
     var client = Game.clientMap[id];
-    if (client.sprite) client.sprite.destroy();
+    removeSprite(client);
     delete Game.clientMap[id];
 };

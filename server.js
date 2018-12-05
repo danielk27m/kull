@@ -49,8 +49,41 @@ function updateState() {
 
     forAllClients(function(socket) {
         var clientInfo = socket.myClientInfo;
-        clientInfo.x += clientInfo.dx * elapsed * clientInfo.speed / 10.0;
-        clientInfo.y += clientInfo.dy * elapsed * clientInfo.speed / 10.0;
+        if (!clientInfo.isPlayer) return;
+        var now = Date.now();
+
+        if (clientInfo.moveEnableTime >= now) return;
+        var newx = clientInfo.x + clientInfo.dx * elapsed * clientInfo.speed / 10.0;
+        var newy = clientInfo.y + clientInfo.dy * elapsed * clientInfo.speed / 10.0;
+        forAllClients(function(socket2) {
+            if (socket2 == socket) return;
+
+            var clientInfo2 = socket2.myClientInfo;
+            if (!clientInfo2.isPlayer) return;
+
+            var distx = newx - clientInfo2.x;
+            var disty = newy - clientInfo2.y;
+            var dist = Math.sqrt(distx * distx + disty * disty);
+            if (dist < 24) {
+                newx = clientInfo.x;
+                newy = clientInfo.y;
+
+                if (clientInfo.catchEnableTime < now && clientInfo2.catchEnableTime < now) {
+                    if (clientInfo.role === "hunter") {
+                        if (clientInfo2.role === "prey") {
+                            clientInfo2.moveEnableTime = now + 2000;
+                            clientInfo.catchEnableTime = now + 2000;
+                            clientInfo.role = "prey";
+                            clientInfo.speed = 1.0;
+                            clientInfo2.role = "hunter";
+                            clientInfo2.speed = 0.8;
+                        }
+                    }
+                }
+            }
+        });
+        clientInfo.x = newx;
+        clientInfo.y = newy;
     });
     var allClientInfo = getAllClients();
     //console.log("update to all");
@@ -79,6 +112,8 @@ io.on('connection',function(socket){
             speed: role == "hunter"? 0.8 : 1,
             isPlayer: data.isPlayer || false,
             needsUpdates: data.needsUpdates || false,
+            moveEnableTime: Date.now(),
+            catchEnableTime: Date.now(),
         };
         console.log("new client: " + JSON.stringify(socket.myClientInfo));
         //console.log("newclient from " + socket.myClientInfo.id);
