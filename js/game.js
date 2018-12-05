@@ -41,12 +41,20 @@ Game.create = function(){
 };
 
 function removeSprite(client) {
-    if (client.sprite) client.sprite.destroy();
+    if (client.hair) client.hair.destroy();
+    if (client.body) client.body.destroy();
 }
 
 function addSprite(client, role) {
-    client.sprite = game.add.sprite(client.info.x, client.info.y, role);
-    Game.sprites.add(client.sprite);
+    client.body = game.add.sprite(client.info.x, client.info.y, role);
+    client.hair = game.add.sprite(client.info.x, client.info.y, "hair");
+    Game.sprites.add(client.body);
+    Game.sprites.add(client.hair);
+    var colorAngle = client.info.id * 2.5;
+    var red = Math.sin(colorAngle - 2) * 127.5 + 127.5;
+    var green = Math.sin(colorAngle) * 127.5 + 127.5;
+    var blue = Math.sin(colorAngle + 2) * 127.5 + 127.5;
+    client.hair.tint = (red << 16) + (green << 8) + (blue);
 }
 
 Game.update = function() {
@@ -107,7 +115,7 @@ Game.onUpdate = function(list) {
     for(var i = 0; i < list.length; i++) {
         var clientInfo = list[i];
         var client = Game.clientMap[clientInfo.id];
-        if (!client.sprite) continue;
+        if (!client.body) continue;
 
         if (client.info) {
             if (client.info.role != clientInfo.role) {
@@ -117,9 +125,12 @@ Game.onUpdate = function(list) {
         }
 
         client.info = clientInfo;
-        var tween = game.add.tween(client.sprite);
+        var tween = game.add.tween(client.body);
         tween.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
         tween.start();
+        var tween2 = game.add.tween(client.hair);
+        tween2.to({ x: clientInfo.x, y: clientInfo.y, z: clientInfo.y }, 100);
+        tween2.start();
 
         var dir;
         if (Math.abs(clientInfo.dx) > Math.abs(clientInfo.dy)) {
@@ -134,12 +145,11 @@ Game.onUpdate = function(list) {
             } else if(clientInfo.dy < 0) {
                 dir = 0;
             } else {
-                client.sprite.frame = 10 * 13;
+                client.hair.frame = client.body.frame = 10 * 13;
                 continue;
             }
         }
-        client.sprite.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;
-    }
+        client.hair.frame = client.body.frame = (dir + 8) * 13 + Math.floor(Date.now() / 125) % 8 + 1;    }
 };
 
 Game.onRemove = function(id) {
