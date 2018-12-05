@@ -13,6 +13,13 @@ Game.preload = function() {
     game.load.spritesheet('hair', 'assets/sprites/hair.png', 64, 64);
     game.load.spritesheet('hunter', 'assets/sprites/hunter.png', 64, 64);
     game.load.spritesheet('prey', 'assets/sprites/prey.png', 64, 64);
+    game.load.audio('music', 'assets/music/one.mp3');
+    game.load.audio('avoid1', 'assets/sounds/avoid1.wav');
+    game.load.audio('catch1', 'assets/sounds/catch1.wav');
+    game.load.audio('idle1', 'assets/sounds/idle1.wav');
+    game.load.audio('idle2', 'assets/sounds/idle2.wav');
+    game.load.audio('idle3', 'assets/sounds/idle3.wav');
+    game.load.audio('idle4', 'assets/sounds/idle4.wav');
 };
 
 Game.create = function(){
@@ -30,12 +37,30 @@ Game.create = function(){
     Game.sprites = game.add.group();
     Game.infoText = game.add.text(0, 0, "foo", { fill: "white" });
 
+    Game.music = game.add.audio('music');
+    Game.avoid1 = game.add.audio('avoid1');
+    Game.catch1 = game.add.audio('catch1');
+    Game.idle1 = game.add.audio('idle1');
+    Game.idle2 = game.add.audio('idle2');
+    Game.idle3 = game.add.audio('idle3');
+    Game.idle4 = game.add.audio('idle4');
+    Game.nextIdle = Date.now();
+
     Client.sendNewClient({
         type: type,
         isPlayer: type == "player" || type == "pcplayer",
         needsUpdates: type == "spectator" || type == "pcplayer",
+        playsSound: type == "spectator",
     });
 };
+
+function playSound(name, looped) {
+    if (Game.myId) {
+        if (Game.clientMap[Game.myId].info.playsSound) {
+            Game[name].play();
+        }
+    }
+}
 
 function removeSprite(client) {
     if (client.hair) client.hair.destroy();
@@ -45,6 +70,8 @@ function removeSprite(client) {
 function addSprite(client, role) {
     client.body = game.add.sprite(client.info.x, client.info.y, role);
     client.hair = game.add.sprite(client.info.x, client.info.y, "hair");
+    client.body.pivot.setTo(32, 56);
+    client.hair.pivot.setTo(32, 56);
     Game.sprites.add(client.body);
     Game.sprites.add(client.hair);
     var colorAngle = client.info.id * 2.5;
@@ -56,6 +83,12 @@ function addSprite(client, role) {
 
 Game.update = function() {
     Game.sprites.sort("z", Phaser.Group.SORT_ASCENDING);
+
+    var now = Date.now();
+    if (Game.nextIdle < now) {
+        playSound(["idle1", "idle2", "idle3", "idle4"][Math.floor(Math.random() * 4)], false);
+        Game.nextIdle = now + 3000 + Math.random() * 10000;
+    }
 
     if (Game.myId === undefined) {
         return;
@@ -105,6 +138,8 @@ Game.onIdent = function(clientInfo) {
     };
     Game.clientMap[clientInfo.id] = client;
     Game.infoText.text = "ID=" + clientInfo.id;
+
+    playSound("music", true);
 };
 
 Game.onNewClient = function(list){
@@ -131,18 +166,19 @@ Game.onUpdate = function(list) {
             if (client.info.role != clientInfo.role) {
                 removeSprite(client);
                 addSprite(client, clientInfo.role);
+                playSound("catch1", false);
             }
         }
 
         client.info = clientInfo;
-        var x = clientInfo.x - 32;
-        var y = clientInfo.y - 56;
+        var x = clientInfo.x;
+        var y = clientInfo.y;
         var z = clientInfo.y;
         var tween = game.add.tween(client.body);
-        tween.to({ x: x, y: y, z: y }, 100);
+        tween.to({ x: x, y: y, z: z }, 100);
         tween.start();
         var tween2 = game.add.tween(client.hair);
-        tween2.to({ x: x, y: y, z: y }, 100);
+        tween2.to({ x: x, y: y, z: z + 0.5 }, 100);
         tween2.start();
 
         var dir;

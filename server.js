@@ -101,10 +101,21 @@ function updateState() {
 
 setInterval(updateState, 100);
 
+var roles = ["hunter", "prey"];
+var nextRole = 0;
+
 io.on('connection',function(socket){
 
     socket.on('newclient',function(data){
-        var role = data.isPlayer? randomBool()? "hunter" : "prey" : "";
+        var role;
+        if (data.isPlayer) {
+            role = roles[nextRole++];
+            if (nextRole >= roles.length) {
+                nextRole = 0;
+            }
+        } else {
+            role = "";
+        }
         socket.myClientInfo = {
             id: server.lastClientID++,
             type: data.type,
@@ -116,6 +127,7 @@ io.on('connection',function(socket){
             speed: role == "hunter"? 0.8 : 1,
             isPlayer: data.isPlayer || false,
             needsUpdates: data.needsUpdates || false,
+            playsSound: data.playsSound || false,
             moveEnableTime: Date.now(),
             catchEnableTime: Date.now(),
         };
